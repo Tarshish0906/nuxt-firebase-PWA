@@ -2,16 +2,16 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">nuxt-web3</h1>
+      <h1 class="title">nuxt-web3-alpha</h1>
       <h2 class="subtitle">My Awesome Nuxt.js project</h2>
       <div class="links">
-        <input type="text" v-model="inputNumber" placeholder="input number" />
-        <button @click="setNumber()">Set Number to contract</button>
+        <input type="text" v-model="inputMessage" placeholder="input message" />
+        <button @click="setMessage()">Set Message to contract</button>
       </div>
       <div class="links">
-        <button @click="getNumber()">Get Number from contract</button>
+        <button @click="getMessage()">Get Message from contract</button>
       </div>
-      <div>Number:{{ number }}</div>
+      <div>Message:{{ message }}</div>
     </div>
   </div>
 </template>
@@ -21,26 +21,26 @@ export default {
   data() {
     return {
       // コントラクトから取得する数値
-      number: 0,
+      message: "",
       // フォームから入力された数値
-      inputNumber: 0
+      inputMessage: ""
     };
   },
   methods: {
-    getNumber: async function() {
+    getMessage: async function() {
       // コントラクトからの読み込み部分
       let ret = await this.$contract.methods.get().call();
       // フロントに反映
-      this.number = ret;
+      this.message = ret;
     },
-    setNumber: async function() {
+    setMessage: async function() {
       // MetaMask で使っているアカウントの取得
       let accounts = await this.$web3.eth.getAccounts();
       console.log(accounts);
       let account = accounts[0];
       // コントラクトへの書き込み部分
       let ret = await this.$contract.methods
-        .set(this.inputNumber)
+        .set(this.inputMessage)
         .send({ from: account });
     }
   },

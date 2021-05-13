@@ -1,6 +1,7 @@
 import Web3 from "web3";
 // コントラクトのコンパイル後の設定ファイルの読み込み
-import artifacts from "~~/build/contracts/SingleNumRegister.json";
+// import artifacts from "~~/build/contracts/SingleNumRegister.json";
+import artifacts from "~~/build/contracts/Message.json";
 
 export default async function(context, inject) {
   let web3;
