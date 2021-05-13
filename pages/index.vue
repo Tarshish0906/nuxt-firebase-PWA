@@ -3,26 +3,47 @@
     <div>
       <Logo />
       <h1 class="title">nuxt-web3</h1>
+      <h2 class="subtitle">My Awesome Nuxt.js project</h2>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >GitHub</a>
+        <input type="text" v-model="inputNumber" placeholder="input number" />
+        <button @click="setNumber()">Set Number to contract</button>
       </div>
+      <div class="links">
+        <button @click="getNumber()">Get Number from contract</button>
+      </div>
+      <div>Number:{{ number }}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      // コントラクトから取得する数値
+      number: 0,
+      // フォームから入力された数値
+      inputNumber: 0
+    };
+  },
+  methods: {
+    getNumber: async function() {
+      // コントラクトからの読み込み部分
+      let ret = await this.$contract.methods.get().call();
+      // フロントに反映
+      this.number = ret;
+    },
+    setNumber: async function() {
+      // MetaMask で使っているアカウントの取得
+      let accounts = await this.$web3.eth.getAccounts();
+      console.log(accounts);
+      let account = accounts[0];
+      // コントラクトへの書き込み部分
+      let ret = await this.$contract.methods
+        .set(this.inputNumber)
+        .send({ from: account });
+    }
+  },
   mounted() {
     console.log("Current Block Number");
     this.$web3.eth.getBlockNumber().then(console.log);
