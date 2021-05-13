@@ -1,5 +1,5 @@
-const message = artifacts.require("message");
+const Message = artifacts.require("Message");
 
 module.exports = function(deployer) {
-  deployer.deploy(message);
+  deployer.deploy(Message);
 };
