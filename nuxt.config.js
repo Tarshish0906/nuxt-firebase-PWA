@@ -1,5 +1,18 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+
+  ssr: false,
+
+  generate: {
+    dir: "public"
+  },
+  env: {
+    //ここから追加
+    APIKEY: process.env.APIKEY,
+    AUTHDOMAIN: process.env.AUTHDOMAIN,
+    PRIVATE: process.env.PRIVATE || "http://localhost:8545"
+  },
+
   head: {
     title: "nuxt-web3",
     htmlAttrs: {
@@ -26,8 +39,22 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ["@nuxtjs/pwa"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {},
+
+  manifest: {
+    name: "nuxt-web3-pwa",
+    title: "nuxt-web3-pwa",
+    "og:title": "nuxt-web3-pwa",
+    description: "nuxt-web3-pwa-alphaのDescription",
+    "og:description": "nuxt-web3-pwa-alphaのDescription",
+    lang: "ja",
+    theme_color: "#41b883",
+    background_color: "#ffffff",
+    display: "standalone",
+    scope: "/",
+    start_url: "/"
+  }
 };
